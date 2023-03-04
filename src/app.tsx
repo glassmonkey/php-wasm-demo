@@ -61,7 +61,7 @@ export default function () {
 
     return (<div>
         <main>
-            PHPのバージョン:
+            PHP's Version:
             <Select
                 styles={{
                     option: (baseStyles, state) => ({
