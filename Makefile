@@ -49,8 +49,13 @@ build-wasm: build-image
 	mv $(DIST_DIR)/php-$(PHP_VERSION).js public;
 	mv $(DIST_DIR)/php-$(PHP_VERSION).wasm public
 
+JOBS := $(call add $(shell grep cpu.cores /proc/cpuinfo | sort -u | sed 's/[^0-9]//g'), 1)
+ifeq  ($(shell uname), Darwin)
+	JOBS = $(shell sysctl -a machdep.cpu  | grep core_count | sed 's/[^0-9]//g')
+endif
+
 build:
-	$(MAKE) build-all -j9
+	$(MAKE) build-all -j$(JOBS)
 
 build-all: build-5.6 build-7.0 build-7.1 build-7.3 build-7.4 build-8.0 build-8.1 build-8.2
 
@@ -76,10 +81,10 @@ build-8.0:
 	$(MAKE) build-wasm PHP_VERSION=8.0.11
 
 build-8.1:
-	$(MAKE) build PHP_VERSION=8.1.14
+	$(MAKE) build-wasm PHP_VERSION=8.1.14
 
 build-8.2:
-	$(MAKE) build PHP_VERSION=8.2.0
+	$(MAKE) build-wasm PHP_VERSION=8.2.0
 
 
 
