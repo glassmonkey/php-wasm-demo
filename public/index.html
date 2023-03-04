@@ -4,24 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Emscripten-Generated Code</title>
-    <style>
-        body {
-            font-family: arial;
-            margin: 0;
-            padding: none;
-        }
-
-    </style>
 </head>
 <body>
-<textarea id="output" rows="8"></textarea>
-<button id="mybutton">Run myFunction</button>
-
-<script type='text/javascript'>
-    const php = await startPHP(phpLoaderModule, "web");
-    console.log(php.run(`<?php echo "Hello, world!"; `));
-</script>
-<script async type="text/javascript" src="php-8.2.js"></script>
+<div id="app"></div>
+<script async type="text/javascript" src="./index.js"></script>
 </body>
 </html>
 

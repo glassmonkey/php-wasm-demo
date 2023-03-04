@@ -46,47 +46,44 @@ endif
 build-wasm: build-image
 	docker run --rm -v $(DIST_DIR):/output $(PHP_IMAGE) \
 		sh -c $(CMD_DIST);
-	mv $(DIST_DIR)/php-$(PHP_VERSION).js public;
-	mv $(DIST_DIR)/php-$(PHP_VERSION).wasm public
+	mv $(DIST_DIR)/php-$(PHP_VERSION).js public/;
+	mv $(DIST_DIR)/php-$(PHP_VERSION).wasm public/;
 
 JOBS := $(call add $(shell grep cpu.cores /proc/cpuinfo | sort -u | sed 's/[^0-9]//g'), 1)
 ifeq  ($(shell uname), Darwin)
 	JOBS = $(shell sysctl -a machdep.cpu  | grep core_count | sed 's/[^0-9]//g')
 endif
-
 build:
 	$(MAKE) build-all -j$(JOBS)
 
 build-all: build-5.6 build-7.0 build-7.1 build-7.3 build-7.4 build-8.0 build-8.1 build-8.2
 
 build-5.6:
-	$(MAKE) build-wasm PHP_VERSION=5.6.40
+	$(MAKE) build-wasm PHP_VERSION=5.6
 
 build-7.0:
-	$(MAKE) build-wasm PHP_VERSION=7.0.33
+	$(MAKE) build-wasm PHP_VERSION=7.0
 
 build-7.1:
-	$(MAKE) build-wasm PHP_VERSION=7.1.30
+	$(MAKE) build-wasm PHP_VERSION=7.1
 
 build-7.2:
-	$(MAKE) build-wasm PHP_VERSION=7.2.34
+	$(MAKE) build-wasm PHP_VERSION=7.2
 
 build-7.3:
-	$(MAKE) build-wasm PHP_VERSION=7.3.33
+	$(MAKE) build-wasm PHP_VERSION=7.3
 
 build-7.4:
-	$(MAKE) build-wasm PHP_VERSION=7.4.33
+	$(MAKE) build-wasm PHP_VERSION=7.4
 
 build-8.0:
-	$(MAKE) build-wasm PHP_VERSION=8.0.11
+	$(MAKE) build-wasm PHP_VERSION=8.0
 
 build-8.1:
-	$(MAKE) build-wasm PHP_VERSION=8.1.14
+	$(MAKE) build-wasm PHP_VERSION=8.1
 
 build-8.2:
-	$(MAKE) build-wasm PHP_VERSION=8.2.0
-
-
+	$(MAKE) build-wasm PHP_VERSION=8.2
 
 
 debug: build-image
