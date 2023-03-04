@@ -1,5 +1,5 @@
 {
-  "name": "wasm-php-demo",
+  "name": "php-wasm-demo",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

@@ -1,6 +1,6 @@
-# wasm-php-demo
+# php-wasm-demo
 
-`wasm-php-demo` is a demonstration of PHP's WebAssembly Build.
+`php-wasm-demo` is a demonstration of PHP's WebAssembly Build.
 
 
 
