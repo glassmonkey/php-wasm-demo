@@ -72,7 +72,8 @@ export default function () {
                 options={options}
                 defaultValue={selectedValue}
                 onChange={(option) => {
-                    option ? setSelectedValue(option) : null;
+                    setPHP(null)
+                    setSelectedValue(option)
                 }}
             />
             <PHPContext.Provider value={php}>
