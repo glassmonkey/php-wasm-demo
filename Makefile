@@ -40,7 +40,7 @@ build-image:
 
 CMD_DIST := 'cp /root/output/php* /output'
 ifeq ($(WITH_CLI_SAPI),yes)
-	CMD_DIST = $(CMD_DIST) && 'cp /root/lib/share/terminfo/x/xterm /output/terminfo/x'
+	CMD_DIST = "$(CMD_DIST) && cp /root/lib/share/terminfo/x/xterm /output/terminfo/x"
 endif
 
 build-wasm: build-image
