@@ -3,7 +3,7 @@ import {PHP, startPHP} from './php-wasm';
 import {useContext, useEffect, useState} from "react";
 import Select from "react-select";
 
-const versions = ['7.4', '8.1', '8.2'] as const
+const versions = ['5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2'] as const
 
 type Version = typeof versions[number]
 
@@ -16,7 +16,7 @@ const options = versions.map((v)=> ({
 const PHPContext = React.createContext(null);
 
 async function initPHP(v: Version) {
-    // todo: switch version
+    // todo handling when load failed
     const PHPLoaderModule = await import(`./php-${v}.js`);
     return startPHP(PHPLoaderModule, "WEB", {});
 }
@@ -47,21 +47,21 @@ function PhpInfo() {
 
 export default function () {
     const [php, setPHP] = useState<PHP|null>(null)
-    const [version, serVersion] = useState<Version>(options[2].value)
     const [selectedValue, setSelectedValue] = useState(options[2]);
 
     useEffect( function (){
         (async function() {
-            setPHP(await initPHP(version))
+            setPHP(await initPHP(selectedValue.value))
         })()
-    }, [version])
+    }, [selectedValue])
+
     if (php == null) {
-        return (<></>)
+        return (<> loading ... </>)
     }
 
     return (<div>
         <main>
-            PHP's Version:
+            <label>PHP's Version:</label>
             <Select
                 styles={{
                     option: (baseStyles, state) => ({
@@ -71,8 +71,8 @@ export default function () {
                 }}
                 options={options}
                 defaultValue={selectedValue}
-                onChange={(value) => {
-                    value ? serVersion(value.value) : null;
+                onChange={(option) => {
+                    option ? setSelectedValue(option) : null;
                 }}
             />
             <PHPContext.Provider value={php}>
