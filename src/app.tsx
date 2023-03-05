@@ -47,7 +47,7 @@ function PhpInfo() {
 
 export default function () {
     const [php, setPHP] = useState<PHP|null>(null)
-    const [selectedValue, setSelectedValue] = useState(options[2]);
+    const [selectedValue, setSelectedValue] = useState(options[options.length - 1]);
 
     useEffect( function (){
         (async function() {
@@ -72,6 +72,7 @@ export default function () {
                 options={options}
                 defaultValue={selectedValue}
                 onChange={(option) => {
+                    // null means loading.
                     setPHP(null)
                     setSelectedValue(option)
                 }}
