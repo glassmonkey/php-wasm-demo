@@ -19,8 +19,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "esbuild ./src/index.tsx --outdir=public --bundle  --watch",
-    "build": "esbuild ./src/index.tsx --outdir=public --bundle"
+    "start": "WATCH=true node build.mjs",
+    "build": "node build.mjs"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +39,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "esbuild": "^0.17.11"
   }
 }
