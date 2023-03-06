@@ -1,7 +1,7 @@
 /**
  * The default base used to convert a path into the URL object.
  */
-export const DEFAULT_BASE_URL = "http://example.com";
+export const DEFAULT_BASE_URL = 'http://example.com';
 
 /**
  * Returns a string representing the path, query, and
@@ -13,11 +13,11 @@ export const DEFAULT_BASE_URL = "http://example.com";
  * getPathQueryFragment(url); // '/foo/bar?baz=qux#quux'
  * ```
  *
- * @param  url The URL.
+ * @param url The URL.
  * @returns The path, query, and fragment.
  */
 export function getPathQueryFragment(url: URL): string {
-  return url.toString().substring(url.origin.length);
+	return url.toString().substring(url.origin.length);
 }
 
 /**
@@ -29,15 +29,15 @@ export function getPathQueryFragment(url: URL): string {
  * removePathPrefix('/bar', '/foo'); // '/bar'
  * ```
  *
- * @param  path   The path to remove the prefix from.
- * @param  prefix The prefix to remove.
+ * @param path   The path to remove the prefix from.
+ * @param prefix The prefix to remove.
  * @returns Path with the prefix removed.
  */
 export function removePathPrefix(path: string, prefix: string): string {
-  if (!prefix || !path.startsWith(prefix)) {
-    return path;
-  }
-  return path.substring(prefix.length);
+	if (!prefix || !path.startsWith(prefix)) {
+		return path;
+	}
+	return path.substring(prefix.length);
 }
 
 /**
@@ -49,13 +49,13 @@ export function removePathPrefix(path: string, prefix: string): string {
  * ensurePathPrefix('/foo/bar', '/foo'); // '/foo/bar'
  * ```
  *
- * @param  path
- * @param  prefix
+ * @param path
+ * @param prefix
  * @returns Path with the prefix added.
  */
 export function ensurePathPrefix(path: string, prefix: string): string {
-  if (!prefix || path.startsWith(prefix)) {
-    return path;
-  }
-  return prefix + path;
+	if (!prefix || path.startsWith(prefix)) {
+		return path;
+	}
+	return prefix + path;
 }
