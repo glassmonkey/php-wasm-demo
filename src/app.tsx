@@ -1,19 +1,18 @@
 import * as React from "react";
 import {PHP, startPHP} from './php-wasm';
-import {useContext, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import Select from "react-select";
 
 const versions = ['5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2'] as const
 
 type Version = typeof versions[number]
 
-
 const options = versions.map((v)=> ({
     value: v,
     label: v,
 }))
 
-const PHPContext = React.createContext(null);
+type Option = typeof options[number]
 
 async function initPHP(v: Version) {
     // todo handling when load failed
@@ -28,15 +27,14 @@ async function runPHP(php: PHP, code: string) {
     return (new TextDecoder().decode(output.body));
 }
 
-function PhpInfo() {
+function PhpInfo(params: {php: PHP}) {
     const [result, setResult] = useState("")
-    const php = useContext(PHPContext);
     useEffect( function (){
         (async function() {
-            const info = await runPHP(php, "<?php phpinfo();")
+            const info = await runPHP(params.php, "<?php phpinfo();")
             setResult(info)
         })()
-    }, [php])
+    }, [params.php])
 
     return (<div
         dangerouslySetInnerHTML={{
@@ -47,7 +45,7 @@ function PhpInfo() {
 
 export default function () {
     const [php, setPHP] = useState<PHP|null>(null)
-    const [selectedValue, setSelectedValue] = useState(options[options.length - 1]);
+    const [selectedValue, setSelectedValue] = useState<Option>(options[options.length - 1]);
 
     useEffect( function (){
         (async function() {
@@ -74,12 +72,10 @@ export default function () {
                 onChange={(option) => {
                     // null means loading.
                     setPHP(null)
-                    setSelectedValue(option)
+                    setSelectedValue(option ?? options[options.length - 1])
                 }}
             />
-            <PHPContext.Provider value={php}>
-                <PhpInfo />
-            </PHPContext.Provider>
+            <PhpInfo php={php}/>
         </main>
     </div>)
 }

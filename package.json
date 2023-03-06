@@ -11,6 +11,7 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "exbuild": "^0.2.2",
+    "npm-run-all": "^4.1.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -20,7 +21,17 @@
   },
   "scripts": {
     "start": "WATCH=true node build.mjs",
-    "build": "node build.mjs"
+    "build": "node build.mjs",
+    "build:types": "npm run clean:types; npm-run-all --parallel build:types:*",
+    "build:types:general": "tsc -p ./tsconfig.json",
+    "build:types:workers": "tsc -p ./tsconfig.worker.json",
+    "clean": "npm-run-all --parallel clean:*",
+    "clean:all": "rm -rf build/* ./build-*/*",
+    "clean:types": "rm -rf build-types/* *.tsbuildinfo",
+    "format": "prettier --write src",
+    "lint:js": "eslint \"./src/**/*.{js,mjs,ts}\"",
+    "lint:js:fix": "npm run lint:js -- --fix",
+    "test": "jest"
   },
   "eslintConfig": {
     "extends": [
